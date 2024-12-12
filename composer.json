@@ -1,0 +1,43 @@
+{
+  "name": "arraypress/stasher",
+  "description": "A utility for capturing and storing WordPress filter values for later use within the same request.",
+  "type": "library",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://github.com/arraypress/stasher/",
+  "authors": [
+    {
+      "name": "David Sherlock",
+      "homepage": "https://arraypress.com/"
+    }
+  ],
+  "require": {
+    "php": ">=7.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "ArrayPress\\WP\\": "src/"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "support": {
+    "issues": "https://github.com/arraypress/stasher/issues",
+    "source": "https://github.com/arraypress/stasher"
+  },
+  "keywords": [
+    "wordpress",
+    "filters",
+    "hooks",
+    "utilities",
+    "filter-values",
+    "data-storage",
+    "temporary-storage",
+    "value-capture",
+    "filter-capture",
+    "hook-values"
+  ]
+}
