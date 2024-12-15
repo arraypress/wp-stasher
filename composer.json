@@ -1,5 +1,6 @@
 {
   "name": "arraypress/stasher",
+  "version": "1.0.0",
   "description": "A utility for capturing and storing WordPress filter values for later use within the same request.",
   "type": "library",
   "license": "GPL-2.0-or-later",
