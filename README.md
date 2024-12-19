@@ -20,7 +20,7 @@ A lightweight utility for WordPress that captures filter values and makes them a
 Install via Composer:
 
 ```bash
-composer require arraypress/stasher
+composer require arraypress/wp-stasher
 ```
 
 ## Basic Usage
