@@ -25,14 +25,48 @@ composer require arraypress/wp-stasher
 
 ## Basic Usage
 
+You can use either the Stasher class directly or the utility functions:
+
 ```php
-use ArrayPress\WP\Stasher;
+// Using the Stasher class
+use ArrayPress\WP\Stasher\Stasher;
 
 // Capture all parameters from a filter 
 Stasher::stash( 'affwp_get_affiliate_rate' );  
 
 // Use the values later 
 $rate = Stasher::get( 'affwp_get_affiliate_rate', 0 ); // Get first parameter 
+
+// Or using utility functions
+stash_filter( 'affwp_get_affiliate_rate' );
+$rate = get_stashed( 'affwp_get_affiliate_rate', 0 );
+```
+
+### Utility Functions
+
+The package provides convenient utility functions for all operations:
+
+```php
+// Stash filter values
+stash_filter( 'my_filter', ['param1', 'param2'], 'first', ['param1'] );
+
+// Get stashed values
+$value = get_stashed( 'my_filter', 'param1' );
+
+// Check if filter has values
+if ( has_stashed( 'my_filter' ) ) {
+    // Use values...
+}
+
+// List all stashed filters
+$filters = list_stashed();
+
+// Get all stashed values
+$all_values = get_all_stashed();
+
+// Clear specific or all filters
+clear_stashed( 'my_filter' );
+clear_stashed(); // Clears all
 ```
 
 ## Examples
@@ -47,40 +81,44 @@ Stasher::stash( 'my_plugin_filter' );
 $first_param = Stasher::get( 'my_plugin_filter', 0 ); 
 $second_param = Stasher::get( 'my_plugin_filter', 1 ); 
 $all_params = Stasher::get( 'my_plugin_filter');
+
+// Or using utility functions
+stash_filter( 'my_plugin_filter' );
+$first_param = get_stashed( 'my_plugin_filter', 0 );
 ```
 
 ### Named Parameters
 
 ```php
 // Store with named parameters for better readability
-Stasher::stash( 'affwp_get_affiliate_rate', [ 'rate', 'affiliate_id', 'type', 'reference' ] );
+stash_filter( 'affwp_get_affiliate_rate', [ 'rate', 'affiliate_id', 'type', 'reference' ] );
 
 // Access by name 
-$rate = Stasher::get( 'affwp_get_affiliate_rate', 'rate' ); 
-$type = Stasher::get( 'affwp_get_affiliate_rate', 'type' );
+$rate = get_stashed( 'affwp_get_affiliate_rate', 'rate' ); 
+$type = get_stashed( 'affwp_get_affiliate_rate', 'type' );
 ```
 
 ### Storage Modes
 
 ```php
 // Store every time the filter runs (default) 
-Stasher::stash( 'my_filter');
+stash_filter( 'my_filter' );
 
 // Store only the first time the filter runs 
-Stasher::stash( 'my_filter', [], 'first' );
+stash_filter( 'my_filter', [], 'first' );
 
 // Store only if no values exist yet 
-Stasher::stash( 'my_filter', [], 'empty' );
+stash_filter( 'my_filter', [], 'empty' );
 ```
 
 ### Required Parameters
 
 ```php
 // Store only when 'reference' parameter has a value 
-Stasher::stash( 'affwp_get_affiliate_rate', [ 'rate', 'affiliate_id', 'type', 'reference' ], 'always', [ 'reference' ] ); 
+stash_filter( 'affwp_get_affiliate_rate', [ 'rate', 'affiliate_id', 'type', 'reference' ], 'always', [ 'reference' ] ); 
 
 // Store only when both rate and reference have values
-Stasher::stash(
+stash_filter(
     'affwp_get_affiliate_rate',
     [ 'rate', 'affiliate_id', 'type', 'reference' ],
     'always',
@@ -88,7 +126,7 @@ Stasher::stash(
 );
 
 // With positional parameters, using indexes
-Stasher::stash(
+stash_filter(
     'some_filter',
     [],      // No named params
     'always',
@@ -103,7 +141,8 @@ Stasher::stash(
  * Capture the affiliate rate from an early filter
  */
 add_action( 'init', function() {
-    Stasher::stash(
+    // Using utility function
+    stash_filter(
         'affwp_get_affiliate_rate',
         [ 'rate', 'affiliate_id', 'type', 'reference' ],
         'first',
@@ -115,8 +154,8 @@ add_action( 'init', function() {
  * Use the rate later in a different filter
  */
 add_filter( 'affwp_calc_referral_amount', function( $amount ) {
-    // Get the stored rate
-    $rate = Stasher::get( 'affwp_get_affiliate_rate', 'rate' );
+    // Get the stored rate using utility function
+    $rate = get_stashed( 'affwp_get_affiliate_rate', 'rate' );
     
     if ( $rate !== null ) {
         // Use the rate in calculations
@@ -131,21 +170,21 @@ add_filter( 'affwp_calc_referral_amount', function( $amount ) {
 
 ```php
 // Check if values exist
-if ( Stasher::has( 'my_filter' ) ) {
+if ( has_stashed( 'my_filter' ) ) {
     // Use the values
 }
 
 // Get all stored filter names
-$filters = Stasher::list();
+$filters = list_stashed();
 
 // Get all stored values
-$all_values = Stasher::get_all();
+$all_values = get_all_stashed();
 
 // Clear specific filter
-Stasher::clear( 'my_filter' );
+clear_stashed( 'my_filter' );
 
 // Clear all stored values
-Stasher::clear();
+clear_stashed();
 ```
 
 ## Contributing

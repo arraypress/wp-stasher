@@ -1,13 +1,19 @@
 <?php
 /**
- * Stasher - A utility for capturing and storing filter values
+ * Post Type Taxonomy Tabs Manager
  *
- * @package     ArrayPress\Utils
+ * @package     ArrayPress/Utils/TaxonomyTabs
  * @copyright   Copyright (c) 2024, ArrayPress Limited
  * @license     GPL2+
+ * @version     1.0.0
+ * @author      ArrayPress
  */
 
+declare( strict_types=1 );
+
 namespace ArrayPress\WP;
+
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Stasher

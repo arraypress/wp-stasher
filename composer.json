@@ -17,7 +17,10 @@
   "autoload": {
     "psr-4": {
       "ArrayPress\\WP\\": "src/"
-    }
+    },
+    "files": [
+      "src/Utilities.php"
+    ]
   },
   "config": {
     "optimize-autoloader": true,
